@@ -3,10 +3,12 @@ import { useState } from 'react';
 import ClusterMetrics from './ClusterMetrics';
 import SnapshotPolicy from './SnapchotPolicy';
 
-const SidebarLayout: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<'metrics' | 'snapshot'>(
-    'metrics'
-  );
+interface SidebarLayoutProps {
+  metricsData: any[];
+}
+
+const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData }) => {
+  const [selectedTab, setSelectedTab] = useState<'metrics' | 'snapshot'>('metrics');
 
   return (
     <div className="flex min-h-screen bg-gray-900 text-white">
@@ -30,11 +32,9 @@ const SidebarLayout: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="w-4/5 ">
+      <div className="w-4/5 p-6">
         {selectedTab === 'metrics' ? (
-          <div className="p-6">
-            <ClusterMetrics />
-          </div>
+          <ClusterMetrics metricsData={metricsData} />
         ) : (
           <SnapshotPolicy />
         )}
