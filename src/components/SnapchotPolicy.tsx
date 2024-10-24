@@ -1,11 +1,13 @@
 import { updateSnapshotPolicy } from "@/pages/api/snapshotPolicyService";
 import { useEffect, useState } from "react";
 import { SnapshotPolicyProps } from "../../utils/interfaces";
-
+import { snapshot_id } from "../../utils/constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import toastify CSS
 
 const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
   policyData,
-  shopshot_id = "snapshot-001",
+  shopshot_id = snapshot_id,
 }) => {
   const [policyName, setPolicyName] = useState(policyData.policyName || "");
   const [directory, setDirectory] = useState(policyData.directory || "");
@@ -14,7 +16,9 @@ const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
   const [days, setDays] = useState<string[]>(policyData.days || []);
   const [deleteAfter, setDeleteAfter] = useState(policyData.deleteAfter || "7 days");
   const [locked, setLocked] = useState(policyData.locked || false);
-  const [enabled, setEnabled]= useState<boolean>(policyData.enabled || true);
+  const [enabled, setEnabled] = useState<boolean>(policyData.enabled || true);
+  const successToast = () => toast.success("Policy updated successfully");
+  const errorToast = () => toast.error("Error updating policy");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,10 +37,10 @@ const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
     try {
       const result = await updateSnapshotPolicy(shopshot_id, snapshotPolicy);
       console.log("Policy updated successfully:", result);
-      alert("Policy updated successfully");
+      successToast();
     } catch (error) {
       console.error("Error updating policy:", error);
-      alert("Error updating policy");
+      errorToast();
     }
   };
 
@@ -54,13 +58,18 @@ const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
   }, [policyData]);
 
   const handleDayChange = (day: string) => {
-    setDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
-    );
+    setDays((prev) => (prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]));
   };
 
   return (
     <div className="bg-gray-900 p-8 rounded-md w-full max-w-6xl mr-auto">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+      />
       <h2 className="text-white text-2xl font-semibold mb-6">Edit Snapshot Policy</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-1">
@@ -84,7 +93,9 @@ const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
         </div>
 
         <div className="space-y-4">
-          <label className="block text-sm text-gray-300">Run Policy on the Following Schedule</label>
+          <label className="block text-sm text-gray-300">
+            Run Policy on the Following Schedule
+          </label>
           <div className="bg-gray-800 p-4">
             <div className="space-y-1 mb-3">
               <label className="block text-sm text-gray-300">Select Schedule Type</label>
@@ -117,18 +128,20 @@ const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
             <div className="space-y-1 my-3">
               <label className="block text-sm text-gray-300">On the Following Day(s)</label>
               <div className="grid grid-cols-7 gap-2">
-                {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
-                  <label key={day} className="flex items-center text-gray-300 space-x-1">
-                    <input
-                      type="checkbox"
-                      value={day}
-                      checked={days.includes(day)}
-                      onChange={() => handleDayChange(day)}
-                      className="text-blue-500 focus:ring-blue-500"
-                    />
-                    <span>{day}</span>
-                  </label>
-                ))}
+                {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(
+                  (day) => (
+                    <label key={day} className="flex items-center text-gray-300 space-x-1">
+                      <input
+                        type="checkbox"
+                        value={day}
+                        checked={days.includes(day)}
+                        onChange={() => handleDayChange(day)}
+                        className="text-blue-500 focus:ring-blue-500"
+                      />
+                      <span>{day}</span>
+                    </label>
+                  )
+                )}
               </div>
             </div>
             <div className="space-y-1 my-3">
@@ -173,7 +186,8 @@ const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
         <div className="mt-4">
           <h3 className="text-sm text-gray-300">Snapshot Locking</h3>
           <p className="text-xs text-gray-400 mb-2">
-            Locked snapshots cannot be deleted before the deletion schedule expires. For this feature to be available, snapshots must be set to automatically delete.
+            Locked snapshots cannot be deleted before the deletion schedule expires. For this
+            feature to be available, snapshots must be set to automatically delete.
           </p>
           <label className="flex items-center text-gray-300 space-x-2">
             <input

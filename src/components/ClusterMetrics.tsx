@@ -5,16 +5,13 @@ import { ClusterMetricsProps } from '../../utils/interfaces';
 
 
 
-const ClusterMetrics: React.FC<ClusterMetricsProps> = ({ metricsData }) => {
+const ClusterMetrics: React.FC<ClusterMetricsProps> = ({ metricsData,secondMetrics }) => {
   const [timeRange, setTimeRange] = useState<'7' | '14' | '30'>('7');
   const [data, setData] = useState(metricsData);
-
+  const [secondMetricsData, setSecondMetricsData] = useState(secondMetrics);
+  
   const handleTimeRangeChange = async (range: '7' | '14' | '30') => {
     setTimeRange(range);
-    // Fetch the data based on the selected range
-    const response = await fetch(`/api/metrics?range=${range}`);
-    const newData = await response.json();
-    setData(newData);
   };
 
   return (
@@ -37,7 +34,7 @@ const ClusterMetrics: React.FC<ClusterMetricsProps> = ({ metricsData }) => {
         heading="IOPS"
       />
       <MetricsChart
-        dummyData={data}
+        dummyData={secondMetricsData}
         heading="Throughput"
       />
     </div>

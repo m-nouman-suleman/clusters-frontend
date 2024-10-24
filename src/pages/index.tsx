@@ -3,13 +3,13 @@ import { fetchMetricsData} from '@/pages/api/metricsService';
 import { GetServerSideProps } from 'next';
 import { fetchSnapshotPolicy } from './api/snapshotPolicyService';
 import { HomeProps } from '../../utils/interfaces';
-
+import {clusterId, secondClusterId, snapshot_id} from "../../utils/constants"
 
 // The component itself
-const Home: React.FC<HomeProps> = ({ metricsData, snapshotPolicy }) => {
+const Home: React.FC<HomeProps> = ({ metricsData,secondMetrics, snapshotPolicy }) => {
 
   return (
-    <SidebarLayout metricsData={metricsData} snapshotPolicy={snapshotPolicy} />
+    <SidebarLayout metricsData={metricsData} secondMetrics={secondMetrics} snapshotPolicy={snapshotPolicy} />
 
   );
 };
@@ -18,13 +18,14 @@ const Home: React.FC<HomeProps> = ({ metricsData, snapshotPolicy }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     // Fetching both metrics data and snapshot policy data
-    const clusterId = '123e4567-e89b-12d3-a456-426614174000'; // Replace with the actual cluster ID
     const metricsData = await fetchMetricsData(clusterId);
-    const snapshotPolicy = await fetchSnapshotPolicy("snapshot-001");
+    const secondMetrics = await fetchMetricsData(secondClusterId);
+    const snapshotPolicy = await fetchSnapshotPolicy(snapshot_id);
     return {
       props: {
         metricsData: metricsData,
         snapshotPolicy: snapshotPolicy,
+        secondMetrics:secondMetrics
       },
     };
   } catch (error) {

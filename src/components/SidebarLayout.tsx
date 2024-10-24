@@ -5,7 +5,7 @@ import SnapshotPolicy from './SnapchotPolicy';
 import { SidebarLayoutProps } from '../../utils/interfaces';
 
 
-const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData,snapshotPolicy }) => {
+const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData,secondMetrics,snapshotPolicy }) => {
   const [selectedTab, setSelectedTab] = useState<'metrics' | 'snapshot'>('metrics');
 
   return (
@@ -32,7 +32,7 @@ const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData,snapshotPolic
       {/* Main Content */}
       <div className="w-4/5 p-6">
         {selectedTab === 'metrics' ? (
-          <ClusterMetrics metricsData={metricsData} />
+          <ClusterMetrics metricsData={metricsData} secondMetrics={secondMetrics} />
         ) : (
           <SnapshotPolicy policyData={snapshotPolicy}/>
         )}

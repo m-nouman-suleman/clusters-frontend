@@ -6,6 +6,7 @@ export interface MetricData {
 
 export interface ClusterMetricsProps {
   metricsData: MetricData[];
+  secondMetrics: MetricData[];
 }
 
 
@@ -16,6 +17,7 @@ export interface MetricsChartProps {
 export interface SidebarLayoutProps {
   metricsData: any[];
   snapshotPolicy:any
+  secondMetrics:MetricData[]
 }
 export interface SnapshotPolicyProps {
   policyData: {
@@ -35,6 +37,7 @@ export interface SnapshotPolicyProps {
 export interface HomeProps {
   metricsData: MetricData[];
   snapshotPolicy: any;
+  secondMetrics:MetricData[]
 }
 
 export interface SnapshotPolicy {
