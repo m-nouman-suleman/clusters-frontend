@@ -1,5 +1,6 @@
 // src/services/metricsService.ts
 import axios from 'axios';
+import { generateTimestamps } from '../../../utils/generateTimestamp';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -10,29 +11,25 @@ export interface MetricData {
 }
 
 export const fetchMetricsData = async (
-  startTime: string,
-  endTime: string
-): Promise<MetricData[]> => {
+  clusterId: string,  // Adding clusterId parameter
+): Promise<any> => {
   try {
-    const response = await axios.get(
-      `${API_BASE_URL}/v1/analytics/time-series`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
-        },
-        params: {
-          metric: 'iops',
-          start_time: startTime,
-          end_time: endTime,
-        },
-      }
-    );
+    const response = await axios.get(`${API_BASE_URL}/api/clusters/${clusterId}/metrics`, {
+      
+          });
+    // Assuming the response structure matches
+    const metrics = response.data.metrics;
 
-    return response.data.map((entry: any) => ({
-      timestamp: entry.timestamp,
-      iopsRead: entry.iopsRead,
-      iopsWrite: entry.iopsWrite,
+    // Generate timestamps dynamically or use your own logic
+    const timestamps = generateTimestamps(metrics.iops.length);
+
+    // Map through the data to create the expected structure
+    const formattedData = timestamps.map((timestamp, index) => ({
+      timestamp,
+      iopsRead: metrics.iops[index],
+      iopsWrite: metrics.throughput[index], // Assuming throughput matches iopsWrite
     }));
+    return formattedData;
   } catch (error) {
     console.error('Error fetching metrics data:', error);
     throw new Error('Unable to fetch metrics data');

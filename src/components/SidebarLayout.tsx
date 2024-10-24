@@ -5,9 +5,10 @@ import SnapshotPolicy from './SnapchotPolicy';
 
 interface SidebarLayoutProps {
   metricsData: any[];
+  snapshotPolicy:any
 }
 
-const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData }) => {
+const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData,snapshotPolicy }) => {
   const [selectedTab, setSelectedTab] = useState<'metrics' | 'snapshot'>('metrics');
 
   return (
@@ -36,7 +37,7 @@ const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData }) => {
         {selectedTab === 'metrics' ? (
           <ClusterMetrics metricsData={metricsData} />
         ) : (
-          <SnapshotPolicy />
+          <SnapshotPolicy policyData={snapshotPolicy}/>
         )}
       </div>
     </div>

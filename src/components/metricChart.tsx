@@ -31,7 +31,7 @@ const MetricsChart: React.FC<MetricsChartProps> = ({ dummyData, heading }) => {
   });
 
   return (
-    <div className="w-full bg-gray-900 p-4 rounded-md">
+    <div className="w-full bg-gray-900 p-6 rounded-md pt-5">
       <h2 className="text-white mb-4 text-xl">{heading}</h2>
       <div className="flex">
         {/* Line Chart Section */}
@@ -41,11 +41,11 @@ const MetricsChart: React.FC<MetricsChartProps> = ({ dummyData, heading }) => {
           </span>
           <ResponsiveContainer
             width="100%"
-            height={300}
+            height={300} // Increased height for better zoom-out effect
           >
             <LineChart
               data={dummyData}
-              margin={{ top: 20, right: 40, left: 0, bottom: 20 }}
+              margin={{ top: 50, right: 40, left: 20, bottom: 40 }} // Adjusted margins
             >
               <CartesianGrid
                 stroke="#444"
