@@ -2,11 +2,8 @@
 import { useState } from 'react';
 import ClusterMetrics from './ClusterMetrics';
 import SnapshotPolicy from './SnapchotPolicy';
+import { SidebarLayoutProps } from '../../utils/interfaces';
 
-interface SidebarLayoutProps {
-  metricsData: any[];
-  snapshotPolicy:any
-}
 
 const SidebarLayout: React.FC<SidebarLayoutProps> = ({ metricsData,snapshotPolicy }) => {
   const [selectedTab, setSelectedTab] = useState<'metrics' | 'snapshot'>('metrics');

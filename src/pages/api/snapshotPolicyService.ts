@@ -1,19 +1,9 @@
 // src/services/snapshotPolicyService.ts
 import axios from 'axios';
+import { SnapshotPolicy } from '../../../utils/interfaces';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-interface SnapshotPolicy {
-  id: string;
-  policyName: string;
-  directory: string;
-  scheduleType: string;
-  time: string;
-  days: string[];
-  deleteAfter: string;
-  locked: boolean;
-  enabled: boolean;
-}
 
 
 export const fetchSnapshotPolicy = async (clusterId: string): Promise<SnapshotPolicy> => {

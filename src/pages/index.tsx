@@ -1,12 +1,9 @@
 import SidebarLayout from '@/components/SidebarLayout';
-import { fetchMetricsData, MetricData } from '@/pages/api/metricsService';
+import { fetchMetricsData} from '@/pages/api/metricsService';
 import { GetServerSideProps } from 'next';
 import { fetchSnapshotPolicy } from './api/snapshotPolicyService';
+import { HomeProps } from '../../utils/interfaces';
 
-interface HomeProps {
-  metricsData: MetricData[];
-  snapshotPolicy: any;
-}
 
 // The component itself
 const Home: React.FC<HomeProps> = ({ metricsData, snapshotPolicy }) => {

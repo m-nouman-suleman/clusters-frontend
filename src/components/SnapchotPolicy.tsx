@@ -1,20 +1,7 @@
 import { updateSnapshotPolicy } from "@/pages/api/snapshotPolicyService";
 import { useEffect, useState } from "react";
+import { SnapshotPolicyProps } from "../../utils/interfaces";
 
-interface SnapshotPolicyProps {
-  policyData: {
-    id: string;
-    policyName: string;
-    directory: string;
-    scheduleType: string;
-    time: string;
-    days: string[];
-    deleteAfter: string;
-    locked: boolean;
-    enabled: boolean;
-  };
-  shopshot_id?: string;
-}
 
 const SnapshotPolicy: React.FC<SnapshotPolicyProps> = ({
   policyData,

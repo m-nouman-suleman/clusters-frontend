@@ -1,16 +1,9 @@
 // components/ClusterMetrics.tsx
 import { useState } from 'react';
 import MetricsChart from './metricChart';
+import { ClusterMetricsProps } from '../../utils/interfaces';
 
-interface MetricData {
-  timestamp: string;
-  iopsRead: number;
-  iopsWrite: number;
-}
 
-interface ClusterMetricsProps {
-  metricsData: MetricData[];
-}
 
 const ClusterMetrics: React.FC<ClusterMetricsProps> = ({ metricsData }) => {
   const [timeRange, setTimeRange] = useState<'7' | '14' | '30'>('7');

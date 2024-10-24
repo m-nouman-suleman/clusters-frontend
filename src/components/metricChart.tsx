@@ -9,17 +9,8 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
+import { MetricsChartProps } from '../../utils/interfaces';
 
-interface MetricData {
-  timestamp: string;
-  iopsRead: number;
-  iopsWrite: number;
-}
-
-interface MetricsChartProps {
-  dummyData: MetricData[];
-  heading: string;
-}
 
 const MetricsChart: React.FC<MetricsChartProps> = ({ dummyData, heading }) => {
   const displayDate = new Date().toLocaleString('en-US', {

@@ -4,12 +4,6 @@ import { generateTimestamps } from '../../../utils/generateTimestamp';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export interface MetricData {
-  timestamp: string;
-  iopsRead: number;
-  iopsWrite: number;
-}
-
 export const fetchMetricsData = async (
   clusterId: string,  // Adding clusterId parameter
 ): Promise<any> => {
